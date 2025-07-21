@@ -39,23 +39,27 @@ export const Header: React.FC = () => {
       <div>
         <a
           href="/"
-          className="flex items-center gap-2.5 hover:opacity-80 transition-all duration-200"
+          className="flex items-center gap-3 hover:opacity-90 transition-all duration-300 group"
         >
           <IconLogo
             className={cn(
-              'w-6 h-6 text-primary hover:scale-110 transition-transform duration-200'
+              'w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-300 drop-shadow-sm'
             )}
           />
-          <span className="font-semibold text-lg tracking-tight bg-gradient-to-r from-blue-500 to-blue-700 bg-clip-text text-transparent">
+          <span className="font-bold text-xl tracking-tight text-primary group-hover:scale-105 transition-transform duration-300">
             Lucid
           </span>
         </a>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         {user ? (
           <UserAccountNav user={user} />
         ) : (
-          <Button variant="outline" onClick={() => setShowLoginModal(true)}>
+          <Button
+            variant="outline"
+            onClick={() => setShowLoginModal(true)}
+            className="glass-effect hover:bg-white/20 dark:hover:bg-gray-800/20 border-white/20 dark:border-gray-700/30 transition-all duration-300 hover:scale-105"
+          >
             Login
           </Button>
         )}

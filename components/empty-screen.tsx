@@ -1,24 +1,45 @@
 import { Button } from '@/components/ui/button'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, BookOpen, Code, Globe, Lightbulb, Sparkles, TrendingUp } from 'lucide-react'
 
 const exampleMessages = [
-  // {
-  //   heading: 'What is DeepSeek R1?',
-  //   message: 'What is DeepSeek R1?'
-  // },
-  // {
-  //   heading: 'Why is Nvidia growing rapidly?',
-  //   message: 'Why is Nvidia growing rapidly?'
-  // },
   {
-    heading: '上海的天气如何',
-    message: '上海的天气如何'
+    heading: 'Latest AI developments',
+    message: 'What are the latest developments in artificial intelligence?',
+    icon: Sparkles,
+    color: 'bg-purple-500'
   },
   {
-    heading: '今天的科技圈新闻',
-    message: '今天的科技圈新闻'
+    heading: 'Market trends analysis',
+    message: 'Analyze current market trends in technology stocks',
+    icon: TrendingUp,
+    color: 'bg-green-500'
+  },
+  {
+    heading: 'Global news summary',
+    message: 'Give me a summary of today\'s most important global news',
+    icon: Globe,
+    color: 'bg-blue-500'
+  },
+  {
+    heading: 'Code explanation',
+    message: 'Explain how React hooks work with examples',
+    icon: Code,
+    color: 'bg-orange-500'
+  },
+  {
+    heading: 'Learning resources',
+    message: 'Best resources to learn machine learning in 2024',
+    icon: BookOpen,
+    color: 'bg-indigo-500'
+  },
+  {
+    heading: 'Creative ideas',
+    message: 'Give me creative startup ideas for sustainable technology',
+    icon: Lightbulb,
+    color: 'bg-yellow-500'
   }
 ]
+
 export function EmptyScreen({
   submitMessage,
   className
@@ -27,23 +48,40 @@ export function EmptyScreen({
   className?: string
 }) {
   return (
-    <div className={`mx-auto w-full transition-all ${className}`}>
-      <div className="bg-background p-2">
-        <div className="mt-2 flex flex-col items-start space-y-2 mb-4 ">
-          {exampleMessages.map((message, index) => (
-            <Button
-              key={index}
-              variant="link"
-              className="h-auto p-0 text-sm text-gray-600"
-              name={message.message}
-              onClick={async () => {
-                submitMessage(message.message)
-              }}
-            >
-              <ArrowRight size={16} className="mr-2 text-muted-foreground" />
-              {message.heading}
-            </Button>
-          ))}
+    <div className={`mx-auto w-full transition-all duration-500 ${className}`}>
+      <div className="mt-6 p-4">
+        <div className="text-center mb-6">
+          <h3 className="text-lg font-semibold text-muted-foreground mb-2">Try asking about...</h3>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-4xl mx-auto">
+          {exampleMessages.map((message, index) => {
+            const IconComponent = message.icon
+            return (
+              <Button
+                key={index}
+                variant="ghost"
+                className="h-auto p-4 text-left justify-start floating-card hover:scale-105 transition-all duration-300 group"
+                onClick={async () => {
+                  submitMessage(message.message)
+                }}
+              >
+                <div className="flex items-start gap-3 w-full">
+                  <div className={`p-2 rounded-lg ${message.color} text-white shadow-lg group-hover:shadow-xl transition-all duration-300`}>
+                    <IconComponent size={16} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium text-sm text-foreground group-hover:text-primary transition-colors duration-300">
+                      {message.heading}
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                      {message.message}
+                    </div>
+                  </div>
+                  <ArrowRight size={16} className="text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" />
+                </div>
+              </Button>
+            )
+          })}
         </div>
       </div>
     </div>

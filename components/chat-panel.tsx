@@ -83,15 +83,27 @@ export function ChatPanel({
       )}
     >
       {messages.length === 0 && (
-        <div className="mb-8 flex items-center gap-2">
-          <IconLogo className="md:size-12 text-muted-foreground size-10" />
-          <TypeAnimation
-            sequence={['Thinking While Retriving...']}
-            wrapper="h2"
-            cursor={true}
-            repeat={0}
-            className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 font-semibold md:text-3xl text-2xl"
-          />
+        <div className="mb-12 flex flex-col items-center gap-6">
+          <IconLogo className="md:size-16 size-12 text-primary drop-shadow-lg" />
+          <div className="text-center space-y-2">
+            <TypeAnimation
+              sequence={[
+                'AI-Powered Search Engine',
+                2000,
+                'Thinking While Retrieving...',
+                2000,
+                'Get Instant Answers',
+                2000
+              ]}
+              wrapper="h1"
+              cursor={true}
+              repeat={Infinity}
+              className="text-primary font-bold md:text-4xl text-3xl"
+            />
+            <p className="text-muted-foreground md:text-lg text-base max-w-2xl">
+              Ask anything and get comprehensive answers with real-time information
+            </p>
+          </div>
         </div>
       )}
       <form
@@ -101,7 +113,7 @@ export function ChatPanel({
           messages.length > 0 ? 'px-2 py-4' : 'px-6'
         )}
       >
-        <div className="relative flex flex-col w-full gap-2 bg-muted rounded-3xl border border-input">
+        <div className="relative flex flex-col w-full gap-2 search-input rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 group">
           <Textarea
             ref={inputRef}
             name="input"
@@ -110,10 +122,10 @@ export function ChatPanel({
             tabIndex={0}
             onCompositionStart={handleCompositionStart}
             onCompositionEnd={handleCompositionEnd}
-            placeholder="Ask a question..."
+            placeholder="Ask anything... ✨"
             spellCheck={false}
             value={input}
-            className="resize-none w-full min-h-12 bg-transparent border-0 px-4 py-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+            className="resize-none w-full min-h-14 bg-transparent border-0 px-6 py-4 text-base placeholder:text-muted-foreground/70 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 font-medium"
             onChange={e => {
               handleInputChange(e)
               setShowEmptyScreen(e.target.value.length === 0)
@@ -138,8 +150,8 @@ export function ChatPanel({
             onBlur={() => setShowEmptyScreen(false)}
           />
           {/* Bottom menu area */}
-          <div className="flex items-center justify-between p-3">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between px-4 pb-4">
+            <div className="flex items-center gap-3">
               <ModelSelector models={models || []} />
               <SearchModeToggle />
             </div>
@@ -149,18 +161,21 @@ export function ChatPanel({
                   variant="outline"
                   size="icon"
                   onClick={handleNewChat}
-                  className="shrink-0 rounded-full group"
+                  className="shrink-0 rounded-full group/btn glass-effect hover:bg-white/20 dark:hover:bg-gray-800/20 border-white/20 dark:border-gray-700/30 transition-all duration-300 hover:scale-110"
                   type="button"
                   disabled={isLoading}
                 >
-                  <MessageCirclePlus className="size-4 group-hover:rotate-12 transition-all" />
+                  <MessageCirclePlus className="size-4 group-hover/btn:rotate-12 transition-all duration-300" />
                 </Button>
               )}
               <Button
                 type={isLoading ? 'button' : 'submit'}
                 size={'icon'}
-                variant={'outline'}
-                className={cn(isLoading && 'animate-pulse', 'rounded-full')}
+                className={cn(
+                  isLoading && 'animate-pulse',
+                  'rounded-full modern-button shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95',
+                  input.length === 0 && !isLoading && 'opacity-50 cursor-not-allowed hover:scale-100'
+                )}
                 disabled={input.length === 0 && !isLoading}
                 onClick={isLoading ? stop : undefined}
               >

@@ -20,7 +20,7 @@
       "id": "o3-mini",
       "name": "o3 mini",
       "provider": "OpenAI",
-      "providerId": "openai",
+      "providerId": "openai", 
       "enabled": false,
       "toolCallType": "native"
     },
