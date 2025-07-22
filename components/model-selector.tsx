@@ -75,33 +75,33 @@ export function ModelSelector({ models }: ModelSelectorProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="text-sm rounded-full glass-effect hover:bg-white/20 dark:hover:bg-gray-800/20 border-white/20 dark:border-gray-700/30 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+          className="text-xs md:text-sm rounded-full glass-effect hover:bg-white/20 dark:hover:bg-gray-800/20 border-white/20 dark:border-gray-700/30 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl py-1 md:py-2 px-2 md:px-3"
         >
           {selectedModel ? (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1.5 md:space-x-2">
               <div className="relative">
                 <Image
                   src={`/providers/logos/${selectedModel.providerId}.svg`}
                   alt={selectedModel.provider}
-                  width={20}
-                  height={20}
-                  className="bg-white rounded-full border shadow-sm"
+                  width={16}
+                  height={16}
+                  className="bg-white rounded-full border shadow-sm md:w-5 md:h-5"
                 />
                 {isReasoningModel(selectedModel.id) && (
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full flex items-center justify-center">
-                    <Lightbulb size={8} className="text-white" />
+                  <div className="absolute -top-1 -right-1 w-2 h-2 md:w-3 md:h-3 bg-blue-500 rounded-full flex items-center justify-center">
+                    <Lightbulb size={6} className="text-white md:size-2" />
                   </div>
                 )}
               </div>
-              <span className="text-xs font-medium">{selectedModel.name}</span>
+              <span className="text-xs font-medium hidden xs:inline">{selectedModel.name}</span>
             </div>
           ) : (
-            <div className="flex items-center space-x-2">
-              <div className="w-5 h-5 bg-gray-400 rounded-full"></div>
-              <span>Select model</span>
+            <div className="flex items-center space-x-1.5 md:space-x-2">
+              <div className="w-4 h-4 md:w-5 md:h-5 bg-gray-400 rounded-full"></div>
+              <span className="text-xs hidden xs:inline">Select model</span>
             </div>
           )}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <ChevronsUpDown className="ml-1 md:ml-2 h-3 w-3 md:h-4 md:w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 p-0 glass-effect border-white/20 dark:border-gray-700/30 shadow-2xl" align="start">

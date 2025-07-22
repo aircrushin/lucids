@@ -53,31 +53,31 @@ export function EmptyScreen({
         <div className="text-center mb-6">
           <h3 className="text-lg font-semibold text-muted-foreground mb-2">Try asking about...</h3>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-4xl mx-auto px-2">
           {exampleMessages.map((message, index) => {
             const IconComponent = message.icon
             return (
               <Button
                 key={index}
                 variant="ghost"
-                className="h-auto p-4 text-left justify-start floating-card hover:scale-105 transition-all duration-300 group"
+                className="h-auto p-3 md:p-4 text-left justify-start floating-card hover:scale-102 md:hover:scale-105 transition-all duration-300 group"
                 onClick={async () => {
                   submitMessage(message.message)
                 }}
               >
-                <div className="flex items-start gap-3 w-full">
-                  <div className={`p-2 rounded-lg ${message.color} text-white shadow-lg group-hover:shadow-xl transition-all duration-300`}>
-                    <IconComponent size={16} />
+                <div className="flex items-start gap-2 md:gap-3 w-full">
+                  <div className={`p-1.5 md:p-2 rounded-lg ${message.color} text-white shadow-lg group-hover:shadow-xl transition-all duration-300`}>
+                    <IconComponent size={14} className="md:size-4" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-medium text-sm text-foreground group-hover:text-primary transition-colors duration-300">
+                    <div className="font-medium text-xs md:text-sm text-foreground group-hover:text-primary transition-colors duration-300">
                       {message.heading}
                     </div>
-                    <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                    <div className="text-xs text-muted-foreground mt-0.5 md:mt-1 line-clamp-2">
                       {message.message}
                     </div>
                   </div>
-                  <ArrowRight size={16} className="text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" />
+                  <ArrowRight size={14} className="text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300 flex-shrink-0 md:size-4" />
                 </div>
               </Button>
             )

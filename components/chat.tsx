@@ -63,7 +63,7 @@ export function Chat({
   }
 
   return (
-    <div className="flex flex-col w-full max-w-4xl pt-20 pb-60 mx-auto stretch">
+    <div className="flex flex-col w-full max-w-4xl pt-16 md:pt-20 pb-60 mx-auto stretch px-3 md:px-0">
       <ChatMessages
         messages={messages}
         data={data}
