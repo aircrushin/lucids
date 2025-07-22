@@ -7,7 +7,11 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "coverage:dashboard": "node scripts/generate-coverage-dashboard.js"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^1.1.5",
@@ -46,6 +50,7 @@
     "jsdom": "^22.1.0",
     "katex": "^0.16.10",
     "lucide-react": "^0.474.0",
+    "msw": "^2.10.4",
     "next": "^15.2.0",
     "next-themes": "^0.3.0",
     "node-html-parser": "^6.1.13",
@@ -68,6 +73,10 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^20",
     "@types/react": "^18",
@@ -75,8 +84,11 @@
     "@types/react-syntax-highlighter": "^15.5.13",
     "eslint": "^8",
     "eslint-config-next": "^14.2.3",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
+    "ts-jest": "^29.4.0",
     "typescript": "^5"
   }
 }

@@ -1,0 +1,67 @@
+name: Coverage Dashboard
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    # Run weekly on Monday at 1:00 AM
+    - cron: '0 1 * * 1'
+
+jobs:
+  build-dashboard:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run tests with coverage
+      run: npm run test:coverage
+    
+    - name: Generate coverage dashboard
+      run: npm run coverage:dashboard
+    
+    - name: Deploy dashboard to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: coverage-dashboard
+        branch: gh-pages
+        target-folder: coverage-dashboard
+    
+    - name: Check for coverage drops
+      run: |
+        HISTORY_FILE="coverage-dashboard/coverage-history.json"
+        if [ -f "$HISTORY_FILE" ]; then
+          # Get the current coverage values
+          CURRENT_STATEMENTS=$(cat coverage/coverage-summary.json | jq '.total.statements.pct')
+          CURRENT_BRANCHES=$(cat coverage/coverage-summary.json | jq '.total.branches.pct')
+          
+          # Get the previous coverage values (second to last entry in history)
+          ENTRIES_COUNT=$(cat $HISTORY_FILE | jq '. | length')
+          
+          if [ "$ENTRIES_COUNT" -gt 1 ]; then
+            PREV_INDEX=$(($ENTRIES_COUNT - 2))
+            PREV_STATEMENTS=$(cat $HISTORY_FILE | jq ".[$PREV_INDEX].statements")
+            PREV_BRANCHES=$(cat $HISTORY_FILE | jq ".[$PREV_INDEX].branches")
+            
+            # Check for significant drops (more than 5%)
+            STATEMENTS_DROP=$(echo "$PREV_STATEMENTS - $CURRENT_STATEMENTS" | bc)
+            BRANCHES_DROP=$(echo "$PREV_BRANCHES - $CURRENT_BRANCHES" | bc)
+            
+            if (( $(echo "$STATEMENTS_DROP > 5" | bc -l) )); then
+              echo "::warning::Statement coverage dropped by $STATEMENTS_DROP% (from $PREV_STATEMENTS% to $CURRENT_STATEMENTS%)"
+            fi
+            
+            if (( $(echo "$BRANCHES_DROP > 5" | bc -l) )); then
+              echo "::warning::Branch coverage dropped by $BRANCHES_DROP% (from $PREV_BRANCHES% to $CURRENT_BRANCHES%)"
+            fi
+          fi
+        fi

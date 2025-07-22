@@ -1,0 +1,67 @@
+name: Test and Coverage
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run tests with coverage
+      run: npm run test:coverage
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        directory: ./coverage
+        fail_ci_if_error: true
+        flags: unittests
+        verbose: true
+    
+    - name: Check coverage thresholds
+      run: |
+        STATEMENTS=$(cat coverage/coverage-summary.json | jq '.total.statements.pct')
+        BRANCHES=$(cat coverage/coverage-summary.json | jq '.total.branches.pct')
+        FUNCTIONS=$(cat coverage/coverage-summary.json | jq '.total.functions.pct')
+        LINES=$(cat coverage/coverage-summary.json | jq '.total.lines.pct')
+        
+        echo "Statements coverage: $STATEMENTS%"
+        echo "Branches coverage: $BRANCHES%"
+        echo "Functions coverage: $FUNCTIONS%"
+        echo "Lines coverage: $LINES%"
+        
+        if (( $(echo "$STATEMENTS < 80" | bc -l) )); then
+          echo "Statement coverage is below 80%"
+          exit 1
+        fi
+        
+        if (( $(echo "$BRANCHES < 70" | bc -l) )); then
+          echo "Branch coverage is below 70%"
+          exit 1
+        fi
+        
+        if (( $(echo "$FUNCTIONS < 80" | bc -l) )); then
+          echo "Function coverage is below 80%"
+          exit 1
+        fi
+        
+        if (( $(echo "$LINES < 80" | bc -l) )); then
+          echo "Line coverage is below 80%"
+          exit 1
+        fi
