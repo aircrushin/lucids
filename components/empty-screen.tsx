@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { ArrowRight, BookOpen, Code, Globe, Lightbulb, Sparkles, TrendingUp } from 'lucide-react'
+import { ArrowRight, Code, Globe, Sparkles, TrendingUp } from 'lucide-react'
 
 const exampleMessages = [
   {
@@ -25,18 +25,6 @@ const exampleMessages = [
     message: 'Explain how React hooks work with examples',
     icon: Code,
     color: 'bg-orange-500'
-  },
-  {
-    heading: 'Learning resources',
-    message: 'Best resources to learn machine learning in 2024',
-    icon: BookOpen,
-    color: 'bg-indigo-500'
-  },
-  {
-    heading: 'Creative ideas',
-    message: 'Give me creative startup ideas for sustainable technology',
-    icon: Lightbulb,
-    color: 'bg-yellow-500'
   }
 ]
 
